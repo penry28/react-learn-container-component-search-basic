@@ -1,25 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import { books } from "./bookshelf.js";
+import Books from "./components/Books";
+import Search from "./components/Search";
 
-function App() {
+const App = () => {
+  const [searchTerm, setSearchTerm] = useState("");
+  const handleInputChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
+  // performs a filtering on the questions
+  // based on the user's input and returns a new array
+  // which gets rendered to the DOM.
+
+  const filteredBooks = books.filter((book) => {
+    return book.name.includes(searchTerm);
+  });
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <section>
+      <Search name="search" onSearch={handleInputChange} val={searchTerm} />
+      <Books books={filteredBooks} />
+    </section>
   );
-}
-
+};
 export default App;
